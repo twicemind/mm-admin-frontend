@@ -1,6 +1,6 @@
 {
   "name": "mm-admin-frontend",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Frontend for MagicMirror Admin",
   "scripts": {
     "ng": "ng",
