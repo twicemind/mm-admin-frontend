@@ -9,6 +9,8 @@ pnpm-debug.log*
 dist/
 build/
 *.tsbuildinfo
+.angular/
+.sass-cache/
 
 # Environment variables
 .env
@@ -37,4 +39,17 @@ temp/
 *.tmp
 
 # OS files
+Thumbs.db
+
+# Angular specific
+/out-tsc
+/bazel-out
+*.log
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# System Files
+.DS_Store
 Thumbs.db

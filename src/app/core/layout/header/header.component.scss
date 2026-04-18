@@ -1,0 +1,53 @@
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: 500;
+  
+  @media (max-width: 480px) {
+    font-size: 16px;
+  }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  
+  .lang-text {
+    @media (max-width: 480px) {
+      display: none;
+    }
+  }
+}
+
+.menu-button {
+  @media (min-width: 769px) {
+    display: none;
+  }
+}

@@ -1,0 +1,28 @@
+<aside class="sidebar">
+  <nav class="sidebar-nav">
+    <mat-nav-list>
+      <ng-container *ngFor="let item of navItems">
+        <a mat-list-item 
+           [routerLink]="item.route" 
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{exact: item.route === '/dashboard'}"
+           class="nav-item">
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label | translate }}</span>
+        </a>
+        
+        <!-- Child items -->
+        <div *ngIf="item.children" class="nav-children">
+          <a mat-list-item 
+             *ngFor="let child of item.children"
+             [routerLink]="child.route" 
+             routerLinkActive="active"
+             class="nav-item child-item">
+            <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
+            <span matListItemTitle>{{ child.label | translate }}</span>
+          </a>
+        </div>
+      </ng-container>
+    </mat-nav-list>
+  </nav>
+</aside>

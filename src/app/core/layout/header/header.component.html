@@ -1,0 +1,43 @@
+<mat-toolbar color="primary" class="app-header">
+  <div class="header-container">
+    <div class="header-left">
+      <button mat-icon-button class="menu-button">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="app-title">{{ 'APP.TITLE' | translate }}</span>
+    </div>
+
+    <div class="header-right">
+      <!-- Language Selector -->
+      <button mat-button [matMenuTriggerFor]="langMenu" class="lang-button">
+        <mat-icon>language</mat-icon>
+        <span class="lang-text">{{ currentLang.toUpperCase() }}</span>
+      </button>
+      <mat-menu #langMenu="matMenu">
+        <button mat-menu-item (click)="switchLanguage('de')">
+          <mat-icon>{{ currentLang === 'de' ? 'check' : '' }}</mat-icon>
+          <span>Deutsch</span>
+        </button>
+        <button mat-menu-item (click)="switchLanguage('en')">
+          <mat-icon>{{ currentLang === 'en' ? 'check' : '' }}</mat-icon>
+          <span>English</span>
+        </button>
+      </mat-menu>
+
+      <!-- Settings -->
+      <button mat-icon-button [matMenuTriggerFor]="settingsMenu">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <mat-menu #settingsMenu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>account_circle</mat-icon>
+          <span>Profile</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>logout</mat-icon>
+          <span>{{ 'COMMON.LOGOUT' | translate }}</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+</mat-toolbar>

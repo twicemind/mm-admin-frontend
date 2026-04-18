@@ -1,0 +1,23 @@
+<div class="plugins-container">
+  <div class="plugins-header">
+    <h1>{{ 'NAV.PLUGINS' | translate }}</h1>
+    <p class="subtitle">Alle verfügbaren Plugins für Ihr MagicMirror Admin</p>
+  </div>
+
+  <div class="plugins-grid">
+    <mat-card *ngFor="let plugin of plugins" class="plugin-card" [style.border-left-color]="plugin.color">
+      <mat-card-header>
+        <div mat-card-avatar class="plugin-icon" [style.background-color]="plugin.color">
+          <mat-icon>{{ plugin.icon }}</mat-icon>
+        </div>
+        <mat-card-title>{{ plugin.name | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ plugin.description }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" [routerLink]="plugin.route">
+          Öffnen
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

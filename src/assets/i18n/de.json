@@ -1,0 +1,39 @@
+{
+  "APP": {
+    "TITLE": "MM Admin",
+    "SLOGAN": "MagicMirror Verwaltung"
+  },
+  "NAV": {
+    "DASHBOARD": "Dashboard",
+    "PLUGINS": "Plugins",
+    "MODULES": "Module",
+    "MAGICMIRROR_CONFIG": "MagicMirror Konfiguration",
+    "MAGICMIRROR_UPDATE": "MagicMirror Update",
+    "DOCKER_UPDATE": "Docker Update",
+    "SYSTEM_UPDATE": "System Update",
+    "WLAN": "WLAN"
+  },
+  "DASHBOARD": {
+    "TITLE": "Dashboard",
+    "WELCOME": "Willkommen bei MM Admin",
+    "OVERVIEW": "Übersicht",
+    "SYSTEM_STATUS": "Systemstatus",
+    "PLUGINS_STATUS": "Plugin-Status",
+    "QUICK_ACTIONS": "Schnellaktionen"
+  },
+  "COMMON": {
+    "LANGUAGE": "Sprache",
+    "SAVE": "Speichern",
+    "CANCEL": "Abbrechen",
+    "DELETE": "Löschen",
+    "EDIT": "Bearbeiten",
+    "CLOSE": "Schließen",
+    "SEARCH": "Suchen",
+    "SETTINGS": "Einstellungen",
+    "LOGOUT": "Abmelden",
+    "LOADING": "Lädt...",
+    "ERROR": "Fehler",
+    "SUCCESS": "Erfolgreich",
+    "DETAILS": "Details"
+  }
+}

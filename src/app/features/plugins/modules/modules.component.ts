@@ -1,0 +1,21 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { TranslateModule } from '@ngx-translate/core';
+
+@Component({
+  selector: 'app-modules',
+  standalone: true,
+  imports: [CommonModule, MatCardModule, TranslateModule],
+  template: `
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ 'NAV.MODULES' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Module Management wird hier implementiert.</p>
+      </mat-card-content>
+    </mat-card>
+  `
+})
+export class ModulesComponent {}

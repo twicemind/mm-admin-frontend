@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+html, body { 
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+// Custom theme colors
+$mm-admin-primary: mat.define-palette(mat.$indigo-palette);
+$mm-admin-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$mm-admin-warn: mat.define-palette(mat.$red-palette);
+
+$mm-admin-theme: mat.define-light-theme((
+  color: (
+    primary: $mm-admin-primary,
+    accent: $mm-admin-accent,
+    warn: $mm-admin-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+@include mat.all-component-themes($mm-admin-theme);

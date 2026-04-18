@@ -1,0 +1,66 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>{{ 'DASHBOARD.TITLE' | translate }}</h1>
+    <p class="subtitle">{{ 'DASHBOARD.WELCOME' | translate }}</p>
+  </div>
+
+  <mat-grid-list [cols]="cols" rowHeight="150px" gutterSize="16px" class="dashboard-grid">
+    <mat-grid-tile *ngFor="let card of cards">
+      <mat-card class="dashboard-card" [style.border-left-color]="card.color">
+        <mat-card-content>
+          <div class="card-content">
+            <div class="card-info">
+              <h3 class="card-title">{{ card.title | translate }}</h3>
+              <p class="card-value">{{ card.value }}</p>
+            </div>
+            <div class="card-icon" [style.color]="card.color">
+              <mat-icon>{{ card.icon }}</mat-icon>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions *ngIf="card.route">
+          <button mat-button color="primary">
+            {{ 'COMMON.DETAILS' | translate }}
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div class="dashboard-sections">
+    <mat-card class="section-card">
+      <mat-card-header>
+        <mat-card-title>{{ 'DASHBOARD.OVERVIEW' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ 'DASHBOARD.WELCOME' | translate }}</p>
+        <p>Hier werden zukünftig weitere Informationen und Statistiken angezeigt.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section-card">
+      <mat-card-header>
+        <mat-card-title>{{ 'DASHBOARD.PLUGINS_STATUS' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="plugin-list">
+          <div class="plugin-item">
+            <mat-icon>view_module</mat-icon>
+            <span>{{ 'NAV.MODULES' | translate }}</span>
+            <span class="status online">Online</span>
+          </div>
+          <div class="plugin-item">
+            <mat-icon>settings</mat-icon>
+            <span>{{ 'NAV.MAGICMIRROR_CONFIG' | translate }}</span>
+            <span class="status online">Online</span>
+          </div>
+          <div class="plugin-item">
+            <mat-icon>system_update</mat-icon>
+            <span>{{ 'NAV.MAGICMIRROR_UPDATE' | translate }}</span>
+            <span class="status online">Online</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
