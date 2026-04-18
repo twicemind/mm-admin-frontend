@@ -26,8 +26,8 @@ describe('HeaderComponent', () => {
     expect(component.currentLang).toBe('de');
   });
 
-  it('should change language', () => {
-    component.changeLanguage('en');
+  it('should switch language', () => {
+    component.switchLanguage('en');
     expect(component.currentLang).toBe('en');
   });
 

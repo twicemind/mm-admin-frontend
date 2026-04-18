@@ -22,7 +22,7 @@ import { SidebarComponent } from './core/layout/sidebar/sidebar.component';
 export class AppComponent implements OnInit {
   title = 'mm-admin-frontend';
 
-  constructor(private translate: TranslateService) {
+  constructor(public translate: TranslateService) {
     // Set default and available languages
     this.translate.addLangs(['de', 'en']);
     this.translate.setDefaultLang('de');
