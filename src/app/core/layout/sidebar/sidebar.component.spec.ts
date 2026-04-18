@@ -47,4 +47,18 @@ describe('SidebarComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('mat-nav-list')).toBeTruthy();
   });
+
+  it('should toggle sidebar', () => {
+    expect(component.isOpen).toBe(false);
+    component.toggle();
+    expect(component.isOpen).toBe(true);
+    component.toggle();
+    expect(component.isOpen).toBe(false);
+  });
+
+  it('should close sidebar', () => {
+    component.isOpen = true;
+    component.close();
+    expect(component.isOpen).toBe(false);
+  });
 });

@@ -41,4 +41,10 @@ describe('HeaderComponent', () => {
     const buttons = compiled.querySelectorAll('button');
     expect(buttons.length).toBeGreaterThan(0);
   });
+
+  it('should emit menuToggle event', () => {
+    spyOn(component.menuToggle, 'emit');
+    component.menuToggle.emit();
+    expect(component.menuToggle.emit).toHaveBeenCalled();
+  });
 });

@@ -1,8 +1,8 @@
 <div class="app-container">
-  <app-header></app-header>
+  <app-header (menuToggle)="sidebar.toggle()"></app-header>
   
   <div class="main-layout">
-    <app-sidebar></app-sidebar>
+    <app-sidebar #sidebar></app-sidebar>
     
     <main class="content">
       <router-outlet></router-outlet>

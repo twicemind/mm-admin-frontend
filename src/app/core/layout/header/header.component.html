@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" class="app-header">
   <div class="header-container">
     <div class="header-left">
-      <button mat-icon-button class="menu-button">
+      <button mat-icon-button class="menu-button" (click)="menuToggle.emit()">
         <mat-icon>menu</mat-icon>
       </button>
       <span class="app-title">{{ 'APP.TITLE' | translate }}</span>

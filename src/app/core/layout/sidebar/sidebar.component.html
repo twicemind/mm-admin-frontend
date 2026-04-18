@@ -1,4 +1,7 @@
-<aside class="sidebar">
+<!-- Mobile backdrop -->
+<div class="sidebar-backdrop" [class.show]="isOpen" (click)="close()"></div>
+
+<aside class="sidebar" [class.open]="isOpen">
   <nav class="sidebar-nav">
     <mat-nav-list>
       <ng-container *ngFor="let item of navItems">
@@ -6,6 +9,7 @@
            [routerLink]="item.route" 
            routerLinkActive="active"
            [routerLinkActiveOptions]="{exact: item.route === '/dashboard'}"
+           (click)="close()"
            class="nav-item">
           <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
           <span matListItemTitle>{{ item.label | translate }}</span>
@@ -17,6 +21,7 @@
              *ngFor="let child of item.children"
              [routerLink]="child.route" 
              routerLinkActive="active"
+             (click)="close()"
              class="nav-item child-item">
             <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
             <span matListItemTitle>{{ child.label | translate }}</span>
