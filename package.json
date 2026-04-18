@@ -1,0 +1,12 @@
+{
+  "name": "mm-admin-frontend",
+  "version": "0.1.0",
+  "description": "Frontend for MagicMirror Admin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["magicmirror", "admin", "frontend"],
+  "author": "",
+  "license": "ISC"
+}
