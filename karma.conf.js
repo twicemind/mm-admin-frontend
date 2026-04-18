@@ -49,6 +49,8 @@ module.exports = function (config) {
         flags: [
           '--no-sandbox',
           '--disable-gpu',
+          '--disable-dev-shm-usage',
+          '--disable-software-rasterizer',
           '--disable-dev-shm-usage'
         ]
       }
