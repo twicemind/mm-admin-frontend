@@ -30,7 +30,7 @@ describe('DashboardComponent', () => {
 
   it('should render dashboard grid', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.dashboard-grid')).toBeTruthy();
+    expect(compiled.querySelector('.dashboard-container')).toBeTruthy();
   });
 
   it('should display status cards', () => {
