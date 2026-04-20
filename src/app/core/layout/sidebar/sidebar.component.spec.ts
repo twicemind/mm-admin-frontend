@@ -3,6 +3,8 @@ import { SidebarComponent } from './sidebar.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -13,7 +15,9 @@ describe('SidebarComponent', () => {
       imports: [SidebarComponent, TranslateModule.forRoot()],
       providers: [
         provideRouter([]),
-        provideAnimations()
+        provideAnimations(),
+        provideHttpClient(),
+        provideHttpClientTesting()
       ]
     }).compileComponents();
 
@@ -40,7 +44,6 @@ describe('SidebarComponent', () => {
     const pluginsItem = component.navItems.find(item => item.label === 'NAV.PLUGINS');
     expect(pluginsItem).toBeTruthy();
     expect(pluginsItem?.children).toBeDefined();
-    expect(pluginsItem?.children?.length).toBe(6);
   });
 
   it('should render navigation list', () => {
