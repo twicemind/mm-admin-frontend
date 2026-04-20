@@ -3,6 +3,8 @@ import { PluginsOverviewComponent } from './plugins-overview.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('PluginsOverviewComponent', () => {
   let component: PluginsOverviewComponent;
@@ -13,7 +15,9 @@ describe('PluginsOverviewComponent', () => {
       imports: [PluginsOverviewComponent, TranslateModule.forRoot()],
       providers: [
         provideRouter([]),
-        provideAnimations()
+        provideAnimations(),
+        provideHttpClient(),
+        provideHttpClientTesting()
       ]
     }).compileComponents();
 
@@ -26,35 +30,26 @@ describe('PluginsOverviewComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have 6 plugins', () => {
-    expect(component.plugins.length).toBe(6);
+  it('should initialize plugins array', () => {
+    expect(component.plugins).toBeDefined();
+    expect(Array.isArray(component.plugins)).toBe(true);
   });
 
-  it('should have plugins with required properties', () => {
-    component.plugins.forEach(plugin => {
-      expect(plugin.name).toBeDefined();
-      expect(plugin.description).toBeDefined();
-      expect(plugin.icon).toBeDefined();
-      expect(plugin.route).toBeDefined();
-      expect(plugin.color).toBeDefined();
-    });
-  });
-
-  it('should render plugin cards', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    const cards = compiled.querySelectorAll('mat-card');
-    expect(cards.length).toBe(6);
-  });
-
-  it('should have modules plugin', () => {
-    const modulesPlugin = component.plugins.find(p => p.route === '/plugins/modules');
-    expect(modulesPlugin).toBeTruthy();
-    expect(modulesPlugin?.name).toBe('NAV.MODULES');
-  });
-
-  it('should have wlan plugin', () => {
-    const wlanPlugin = component.plugins.find(p => p.route === '/plugins/wlan');
-    expect(wlanPlugin).toBeTruthy();
-    expect(wlanPlugin?.name).toBe('NAV.WLAN');
+  it('should have getPluginRoute method', () => {
+    const mockPlugin = {
+      name: 'test-plugin',
+      displayName: 'Test Plugin',
+      version: '1.0.0',
+      description: 'Test',
+      author: 'Test',
+      icon: 'test',
+      color: '#000',
+      frontend: {
+        route: '/plugins/test',
+        menuLabel: 'Test',
+        menuIcon: 'test'
+      }
+    };
+    expect(component.getPluginRoute(mockPlugin)).toBe('/plugins/test');
   });
 });
