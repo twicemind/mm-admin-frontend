@@ -12,9 +12,5 @@ export const routes: Routes = [
     path: 'plugin-manager',
     loadComponent: () => import('./features/plugin-manager/plugin-manager.component').then(m => m.PluginManagerComponent)
   },
-  {
-    path: 'logs',
-    loadComponent: () => import('./features/logs/logs.component').then(m => m.LogsComponent)
-  },
   { path: '**', redirectTo: '/dashboard' }
 ];

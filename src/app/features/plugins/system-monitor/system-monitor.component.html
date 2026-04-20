@@ -108,7 +108,7 @@
             <mat-icon>save</mat-icon>
           </div>
           <mat-card-title>Speicher</mat-card-title>
-          <mat-card-subtitle>{{ systemData.disk?.length || 0 }} Volumes</mat-card-subtitle>
+          <mat-card-subtitle>{{ systemData.disk.length || 0 }} Volumes</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <div class="disk-list">
@@ -137,7 +137,7 @@
             <mat-icon>router</mat-icon>
           </div>
           <mat-card-title>Netzwerk</mat-card-title>
-          <mat-card-subtitle>{{ systemData.network?.length || 0 }} Interfaces</mat-card-subtitle>
+          <mat-card-subtitle>{{ systemData.network.length || 0 }} Interfaces</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <div class="network-list">

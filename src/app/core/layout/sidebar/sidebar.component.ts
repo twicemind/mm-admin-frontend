@@ -39,11 +39,6 @@ export class SidebarComponent implements OnInit {
       route: '/plugins',
       icon: 'extension',
       children: []
-    },
-    {
-      label: 'NAV.LOGS',
-      route: '/logs',
-      icon: 'description'
     }
   ];
 
