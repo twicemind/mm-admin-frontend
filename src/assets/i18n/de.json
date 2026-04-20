@@ -1,11 +1,13 @@
 {
   "APP": {
-    "TITLE": "MM Admin",
+    "TITLE": "MagicMirror Admin",
     "SLOGAN": "MagicMirror Verwaltung"
   },
   "NAV": {
     "DASHBOARD": "Dashboard",
     "PLUGINS": "Plugins",
+    "PLUGIN_MANAGER": "Plugin-Verwaltung",
+    "LOGS": "Logs",
     "MODULES": "Module",
     "MAGICMIRROR_CONFIG": "MagicMirror Konfiguration",
     "MAGICMIRROR_UPDATE": "MagicMirror Update",
@@ -15,7 +17,7 @@
   },
   "DASHBOARD": {
     "TITLE": "Dashboard",
-    "WELCOME": "Willkommen bei MM Admin",
+    "WELCOME": "Willkommen bei MagicMirror Admin",
     "OVERVIEW": "Übersicht",
     "SYSTEM_STATUS": "Systemstatus",
     "PLUGINS_STATUS": "Plugin-Status",

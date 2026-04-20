@@ -5,6 +5,28 @@
 
 .plugins-header {
   margin-bottom: 32px;
+  position: relative;
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    position: relative;
+    
+    @media (max-width: 600px) {
+      flex-direction: column;
+      align-items: stretch;
+      
+      button {
+        width: 100%;
+        position: relative;
+        pointer-events: auto;
+        touch-action: manipulation;
+      }
+    }
+  }
   
   h1 {
     font-size: 32px;
@@ -24,56 +46,234 @@
   }
 }
 
-.plugins-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
+.loading-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 16px;
+  text-align: center;
   
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
+  mat-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+  }
+  
+  mat-spinner {
+    margin-bottom: 16px;
+  }
+  
+  p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 16px;
   }
 }
 
-.plugin-card {
-  border-left: 4px solid;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-4px);
-  }
-  
-  mat-card-header {
-    padding: 16px;
-  }
-  
-  .plugin-icon {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    
-    mat-icon {
-      color: white;
-      font-size: 24px;
-      width: 24px;
-      height: 24px;
+.plugins-content {
+  .installed-plugins {
+    h3 {
+      font-size: 18px;
+      font-weight: 500;
+      margin: 0 0 20px 0;
+      color: #666;
     }
   }
   
-  mat-card-title {
-    font-size: 18px;
-    font-weight: 500;
+  .plugin-list-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
   
-  mat-card-subtitle {
-    font-size: 14px;
-    margin-top: 8px;
-  }
-  
-  mat-card-actions {
+  .plugin-item-compact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 16px;
+    background: white;
+    border-radius: 8px;
+    border-left: 4px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      transform: translateY(-2px);
+    }
+    
+    .plugin-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+      min-width: 0;
+      
+      mat-icon {
+        font-size: 32px;
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+      }
+      
+      .plugin-details {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        flex: 1;
+        min-width: 0;
+        
+        .plugin-header {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          flex-wrap: wrap;
+          
+          .plugin-name {
+            font-weight: 500;
+            font-size: 16px;
+            color: #333;
+          }
+          
+          mat-chip {
+            height: 24px;
+            font-size: 12px;
+            
+            &.integrated-badge {
+              background-color: #e3f2fd;
+              color: #1565c0;
+              font-weight: 500;
+            }
+            
+            &.running {
+              background-color: #e8f5e9;
+              color: #2e7d32;
+            }
+            
+            &.stopped {
+              background-color: #ffebee;
+              color: #c62828;
+            }
+          }
+        }
+        
+        .plugin-description {
+          font-size: 14px;
+          color: #666;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        
+        .plugin-version {
+          font-size: 12px;
+          color: #999;
+        }
+      }
+    }
+    
+    .plugin-actions-compact {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+      
+      button[disabled],
+      button.disabled-plugin-action {
+        opacity: 0.4;
+        cursor: not-allowed;
+        pointer-events: none;
+        
+        mat-icon {
+          color: #999;
+        }
+      }
+    }
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px;
+      
+      .plugin-info {
+        width: 100%;
+        gap: 12px;
+        
+        mat-icon {
+          font-size: 28px;
+          width: 28px;
+          height: 28px;
+        }
+        
+        .plugin-details {
+          .plugin-header {
+            gap: 8px;
+            
+            .plugin-name {
+              font-size: 15px;
+            }
+            
+            mat-chip {
+              height: 20px;
+              font-size: 11px;
+              min-height: 20px;
+            }
+          }
+          
+          .plugin-description {
+            display: none;
+          }
+          
+          .plugin-version {
+            font-size: 11px;
+          }
+        }
+      }
+      
+      .plugin-actions-compact {
+        width: 100%;
+        justify-content: space-evenly;
+        gap: 8px;
+        
+        button {
+          flex: 1;
+        }
+      }
+    }
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 16px;
+  text-align: center;
+  background: #f5f5f5;
+  border-radius: 8px;
+  
+  mat-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+    color: #999;
+  }
+  
+  h3 {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0 0 8px 0;
+    color: #666;
+  }
+  
+  p {
+    font-size: 14px;
+    color: #999;
+    margin: 0;
   }
 }

@@ -30,3 +30,27 @@ $mm-admin-theme: mat.m2-define-light-theme((
 ));
 
 @include mat.all-component-themes($mm-admin-theme);
+
+// Global dialog styles
+.cdk-overlay-container {
+  z-index: 10000 !important;
+}
+
+.cdk-overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.plugin-install-dialog {
+  .mat-mdc-dialog-container {
+    padding: 0;
+    overflow: visible;
+  }
+}
+
+// Ensure dialogs work on mobile
+@media (max-width: 600px) {
+  .mat-mdc-dialog-container {
+    max-width: 95vw !important;
+    margin: 16px;
+  }
+}

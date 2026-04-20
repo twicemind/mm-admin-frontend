@@ -8,5 +8,13 @@ export const routes: Routes = [
     path: 'plugins', 
     loadChildren: () => import('./features/plugins/plugins.routes').then(m => m.PLUGINS_ROUTES)
   },
+  {
+    path: 'plugin-manager',
+    loadComponent: () => import('./features/plugin-manager/plugin-manager.component').then(m => m.PluginManagerComponent)
+  },
+  {
+    path: 'logs',
+    loadComponent: () => import('./features/logs/logs.component').then(m => m.LogsComponent)
+  },
   { path: '**', redirectTo: '/dashboard' }
 ];

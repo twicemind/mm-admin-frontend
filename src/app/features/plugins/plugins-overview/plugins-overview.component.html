@@ -1,23 +1,94 @@
 <div class="plugins-container">
   <div class="plugins-header">
-    <h1>{{ 'NAV.PLUGINS' | translate }}</h1>
-    <p class="subtitle">Alle verfügbaren Plugins für Ihr MagicMirror Admin</p>
+    <div class="header-content">
+      <div>
+        <h1>{{ 'NAV.PLUGINS' | translate }}</h1>
+        <p class="subtitle">Verfügbare Plugins für Ihr MagicMirror Admin</p>
+      </div>
+      <button mat-raised-button color="primary" (click)="openInstallDialog()">
+        <mat-icon>add</mat-icon>
+        Plugin installieren
+      </button>
+    </div>
   </div>
 
-  <div class="plugins-grid">
-    <mat-card *ngFor="let plugin of plugins" class="plugin-card" [style.border-left-color]="plugin.color">
-      <mat-card-header>
-        <div mat-card-avatar class="plugin-icon" [style.background-color]="plugin.color">
-          <mat-icon>{{ plugin.icon }}</mat-icon>
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Lade Plugins...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <mat-icon color="warn">error</mat-icon>
+    <p>{{ error }}</p>
+    <button mat-raised-button color="primary" (click)="loadPlugins()">
+      Erneut versuchen
+    </button>
+  </div>
+
+  <!-- Plugins List -->
+  <div *ngIf="!loading && !error" class="plugins-content">
+    <div *ngIf="plugins.length > 0" class="installed-plugins">
+      <h3>Installierte Plugins ({{ plugins.length }})</h3>
+      <div class="plugin-list-compact">
+        <div class="plugin-item-compact" *ngFor="let plugin of plugins" [style.border-left-color]="plugin.color">
+          <div class="plugin-info">
+            <mat-icon [style.color]="plugin.color">{{ plugin.icon }}</mat-icon>
+            <div class="plugin-details">
+              <div class="plugin-header">
+                <span class="plugin-name">{{ plugin.displayName }}</span>
+                <mat-chip *ngIf="plugin.integrated" class="integrated-badge">
+                  Integriert
+                </mat-chip>
+                <mat-chip [class.running]="plugin.status?.running" [class.stopped]="!plugin.status?.running">
+                  {{ plugin.status?.running ? 'Läuft' : 'Gestoppt' }}
+                </mat-chip>
+              </div>
+              <span class="plugin-description">{{ plugin.description }}</span>
+              <span class="plugin-version">v{{ plugin.version }}</span>
+            </div>
+          </div>
+          <div class="plugin-actions-compact">
+            <button mat-icon-button 
+                    color="primary"
+                    [routerLink]="getPluginRoute(plugin)"
+                    matTooltip="Öffnen">
+              <mat-icon>open_in_new</mat-icon>
+            </button>
+            <button mat-icon-button 
+                    [color]="plugin.status?.running ? 'warn' : 'primary'"
+                    (click)="plugin.status?.running ? stopPlugin(plugin, $event) : startPlugin(plugin, $event)"
+                    [matTooltip]="plugin.status?.running ? 'Stoppen' : 'Starten'">
+              <mat-icon>{{ plugin.status?.running ? 'stop' : 'play_arrow' }}</mat-icon>
+            </button>
+            <button mat-icon-button 
+                    (click)="!plugin.integrated && updatePlugin(plugin, $event)" 
+                    [matTooltip]="plugin.integrated ? 'Integriertes Plugin kann nicht aktualisiert werden' : 'Update'"
+                    [disabled]="plugin.integrated"
+                    [class.disabled-plugin-action]="plugin.integrated">
+              <mat-icon>update</mat-icon>
+            </button>
+            <button mat-icon-button 
+                    color="warn" 
+                    (click)="!plugin.integrated && removePlugin(plugin, $event)" 
+                    [matTooltip]="plugin.integrated ? 'Integriertes Plugin kann nicht entfernt werden' : 'Entfernen'"
+                    [disabled]="plugin.integrated"
+                    [class.disabled-plugin-action]="plugin.integrated">
+              <mat-icon>delete</mat-icon>
+            </button>
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </div>
-        <mat-card-title>{{ plugin.name | translate }}</mat-card-title>
-        <mat-card-subtitle>{{ plugin.description }}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" [routerLink]="plugin.route">
-          Öffnen
-        </button>
-      </mat-card-actions>
-    </mat-card>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="plugins.length === 0" class="empty-state">
+      <mat-icon>extension_off</mat-icon>
+      <h3>Keine Plugins installiert</h3>
+      <p>Installiere Plugins über GitHub oder lokal</p>
+    </div>
   </div>
 </div>

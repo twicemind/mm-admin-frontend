@@ -11,10 +11,15 @@ export interface PluginMetadata {
   author: string;
   icon: string;
   color: string;
+  integrated?: boolean;
   frontend?: {
     route: string;
     menuLabel: string;
     menuIcon: string;
+  };
+  repository?: {
+    type: string;
+    url: string;
   };
   status?: {
     running: boolean;
@@ -26,7 +31,7 @@ export interface PluginMetadata {
   providedIn: 'root'
 })
 export class PluginRegistryService {
-  private apiUrl = '/api';
+  private apiUrl = 'http://localhost:3000/api';
   private pluginsSubject = new BehaviorSubject<PluginMetadata[]>([]);
   
   public plugins$ = this.pluginsSubject.asObservable();

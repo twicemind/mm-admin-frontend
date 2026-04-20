@@ -1,0 +1,69 @@
+<div class="plugin-manager-container">
+  <div class="header">
+    <h1>
+      <mat-icon>settings</mat-icon>
+      Plugin-Verwaltung
+    </h1>
+    <p class="subtitle">Installiere, aktualisiere und entferne Plugins</p>
+  </div>
+
+  <div class="actions">
+    <button mat-raised-button color="primary" (click)="openInstallDialog()">
+      <mat-icon>add</mat-icon>
+      Plugin installieren
+    </button>
+  </div>
+
+  <div class="plugins-list">
+    <mat-card *ngFor="let plugin of plugins" class="plugin-card">
+      <mat-card-header>
+        <div mat-card-avatar class="plugin-avatar" [style.background-color]="plugin.color">
+          <mat-icon>{{ plugin.icon }}</mat-icon>
+        </div>
+        <mat-card-title>{{ plugin.displayName }}</mat-card-title>
+        <mat-card-subtitle>v{{ plugin.version }} • {{ plugin.author }}</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <p>{{ plugin.description }}</p>
+        
+        <div class="plugin-info">
+          <div class="info-item">
+            <mat-icon>check_circle</mat-icon>
+            <span>{{ plugin.status?.running ? 'Läuft' : 'Gestoppt' }}</span>
+          </div>
+          <div class="info-item" *ngIf="plugin.repository">
+            <mat-icon>link</mat-icon>
+            <a [href]="plugin.repository.url" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </mat-card-content>
+      
+      <mat-card-actions>
+        <button mat-button (click)="updatePlugin(plugin)">
+          <mat-icon>update</mat-icon>
+          Update
+        </button>
+        <button mat-button color="warn" (click)="uninstallPlugin(plugin)">
+          <mat-icon>delete</mat-icon>
+          Deinstallieren
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <div *ngIf="plugins.length === 0 && !loading" class="empty-state">
+      <mat-icon>extension_off</mat-icon>
+      <h3>Keine Plugins installiert</h3>
+      <p>Installiere dein erstes Plugin über GitHub</p>
+      <button mat-raised-button color="primary" (click)="openInstallDialog()">
+        <mat-icon>add</mat-icon>
+        Plugin installieren
+      </button>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      <mat-icon>refresh</mat-icon>
+      <p>Lade Plugins...</p>
+    </div>
+  </div>
+</div>

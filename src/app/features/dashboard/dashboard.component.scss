@@ -24,8 +24,19 @@
   }
 }
 
-.dashboard-grid {
+.status-card {
   margin-bottom: 32px;
+  
+  .dashboard-card {
+    max-width: 400px;
+    border-left: 4px solid #4caf50;
+    
+    &.online-status {
+      .card-value {
+        color: #4caf50;
+      }
+    }
+  }
 }
 
 .dashboard-card {
@@ -85,17 +96,95 @@
 
 .dashboard-sections {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+  
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
   
   .section-card {
     mat-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 16px;
       
       mat-card-title {
         font-size: 18px;
         font-weight: 500;
       }
+    }
+  }
+}
+
+.update-section {
+  .update-info {
+    margin-bottom: 20px;
+    
+    .current-version {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      
+      .label {
+        font-weight: 500;
+        color: #666;
+      }
+      
+      .version {
+        font-size: 18px;
+        font-weight: 500;
+        color: #333;
+      }
+    }
+    
+    .update-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px;
+      background: #fff3e0;
+      border-radius: 8px;
+      color: #ff9800;
+      
+      mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+  
+  .update-actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    
+    button mat-icon {
+      margin-right: 8px;
+    }
+  }
+  
+  .update-changelog {
+    padding: 16px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    
+    h4 {
+      margin: 0 0 12px 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: #666;
+    }
+    
+    .changelog-content {
+      font-size: 14px;
+      color: #333;
+      white-space: pre-wrap;
     }
   }
 }

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { PluginRegistryService } from '../../services/plugin-registry.service';
 
 interface NavItem {
   label: string;
@@ -25,16 +26,8 @@ interface NavItem {
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   isOpen = false;
-
-  toggle() {
-    this.isOpen = !this.isOpen;
-  }
-
-  close() {
-    this.isOpen = false;
-  }
   navItems: NavItem[] = [
     {
       label: 'NAV.DASHBOARD',
@@ -45,38 +38,39 @@ export class SidebarComponent {
       label: 'NAV.PLUGINS',
       route: '/plugins',
       icon: 'extension',
-      children: [
-        {
-          label: 'NAV.MODULES',
-          route: '/plugins/modules',
-          icon: 'view_module'
-        },
-        {
-          label: 'NAV.MAGICMIRROR_CONFIG',
-          route: '/plugins/magicmirror-config',
-          icon: 'settings'
-        },
-        {
-          label: 'NAV.MAGICMIRROR_UPDATE',
-          route: '/plugins/magicmirror-update',
-          icon: 'system_update'
-        },
-        {
-          label: 'NAV.DOCKER_UPDATE',
-          route: '/plugins/docker-update',
-          icon: 'cloud_upload'
-        },
-        {
-          label: 'NAV.SYSTEM_UPDATE',
-          route: '/plugins/system-update',
-          icon: 'security_update'
-        },
-        {
-          label: 'NAV.WLAN',
-          route: '/plugins/wlan',
-          icon: 'wifi'
-        }
-      ]
+      children: []
+    },
+    {
+      label: 'NAV.LOGS',
+      route: '/logs',
+      icon: 'description'
     }
   ];
+
+  constructor(private pluginRegistry: PluginRegistryService) {}
+
+  ngOnInit() {
+    // Load plugins and populate sidebar
+    this.pluginRegistry.plugins$.subscribe(plugins => {
+      const pluginsNavItem = this.navItems.find(item => item.route === '/plugins');
+      if (pluginsNavItem) {
+        pluginsNavItem.children = plugins.map(plugin => ({
+          label: plugin.displayName,
+          route: plugin.frontend?.route || `/plugins/${plugin.name}`,
+          icon: plugin.icon || 'extension'
+        }));
+      }
+    });
+
+    // Initial load
+    this.pluginRegistry.loadPlugins().subscribe();
+  }
+
+  toggle() {
+    this.isOpen = !this.isOpen;
+  }
+
+  close() {
+    this.isOpen = false;
+  }
 }

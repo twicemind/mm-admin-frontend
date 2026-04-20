@@ -1,0 +1,167 @@
+<div class="system-monitor-container">
+  <div class="header">
+    <h1>
+      <mat-icon>monitoring</mat-icon>
+      System Monitor
+    </h1>
+    <p class="subtitle">Echtzeit-Überwachung der System-Ressourcen</p>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <p>Lade System-Daten...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error">
+    <mat-icon color="warn">error</mat-icon>
+    <p>{{ error }}</p>
+    <button mat-raised-button color="primary" (click)="loadSystemData()">
+      Erneut versuchen
+    </button>
+  </div>
+
+  <!-- System Data -->
+  <div *ngIf="!loading && !error && systemData">
+    
+    <!-- System Info Card -->
+    <mat-card class="system-info-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>computer</mat-icon>
+          System-Informationen
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">Hostname:</span>
+            <span class="value">{{ systemData.os?.hostname || 'N/A' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Betriebssystem:</span>
+            <span class="value">{{ systemData.os?.distro || 'N/A' }} {{ systemData.os?.release || '' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Plattform:</span>
+            <span class="value">{{ systemData.os?.platform || 'N/A' }} ({{ systemData.os?.arch || 'N/A' }})</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Uptime:</span>
+            <span class="value">{{ formatUptime(systemData.time?.uptime) }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Metrics Grid -->
+    <div class="metrics-section">
+      <!-- Resource Metrics -->
+      <div class="resource-metrics">
+        <!-- CPU Card -->
+        <mat-card class="metric-card compact">
+          <mat-card-header>
+            <div mat-card-avatar class="metric-icon cpu">
+              <mat-icon>memory</mat-icon>
+            </div>
+            <mat-card-title>CPU</mat-card-title>
+            <mat-card-subtitle>Prozessor</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="metric-value">{{ cpuUsage }}%</div>
+            <mat-progress-bar 
+              mode="determinate" 
+              [value]="cpuUsage"
+              [color]="getStatusColor(cpuUsage)">
+            </mat-progress-bar>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Memory Card -->
+        <mat-card class="metric-card compact">
+          <mat-card-header>
+            <div mat-card-avatar class="metric-icon memory">
+              <mat-icon>storage</mat-icon>
+            </div>
+            <mat-card-title>RAM</mat-card-title>
+            <mat-card-subtitle>Arbeitsspeicher</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="metric-value">{{ memoryUsage }}%</div>
+            <mat-progress-bar 
+              mode="determinate" 
+              [value]="memoryUsage"
+              [color]="getStatusColor(memoryUsage)">
+            </mat-progress-bar>
+            <div class="metric-detail">
+              {{ memoryUsed }} GB / {{ memoryTotal }} GB
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <!-- Disk Storage Card (Full Width) -->
+      <mat-card class="storage-card">
+        <mat-card-header>
+          <div mat-card-avatar class="metric-icon disk">
+            <mat-icon>save</mat-icon>
+          </div>
+          <mat-card-title>Speicher</mat-card-title>
+          <mat-card-subtitle>{{ systemData.disk?.length || 0 }} Volumes</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="disk-list">
+            <div *ngFor="let disk of systemData.disk" class="disk-item">
+              <div class="disk-header">
+                <span class="disk-mount">{{ disk.mount }}</span>
+                <span class="disk-percentage">{{ getDiskUsage(disk) }}%</span>
+              </div>
+              <mat-progress-bar 
+                mode="determinate" 
+                [value]="getDiskUsage(disk)"
+                [color]="getStatusColor(getDiskUsage(disk))">
+              </mat-progress-bar>
+              <div class="disk-footer">
+                <span class="disk-size">{{ formatBytes(disk.used) }} verwendet von {{ formatBytes(disk.size) }}</span>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Network Card (Full Width) -->
+      <mat-card class="network-card" *ngIf="systemData.network && systemData.network.length > 0">
+        <mat-card-header>
+          <div mat-card-avatar class="metric-icon network">
+            <mat-icon>router</mat-icon>
+          </div>
+          <mat-card-title>Netzwerk</mat-card-title>
+          <mat-card-subtitle>{{ systemData.network?.length || 0 }} Interfaces</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="network-list">
+            <div *ngFor="let net of systemData.network" class="network-item">
+              <div class="network-name">{{ net.iface }}</div>
+              <div class="network-stats">
+                <div class="stat">
+                  <mat-icon>download</mat-icon>
+                  <span>{{ formatBytes(net.rx_sec || 0) }}/s</span>
+                </div>
+                <div class="stat">
+                  <mat-icon>upload</mat-icon>
+                  <span>{{ formatBytes(net.tx_sec || 0) }}/s</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  <!-- Info Footer -->
+  <div *ngIf="!loading && !error" class="footer">
+    <mat-icon>info</mat-icon>
+    <span>Daten werden alle 5 Sekunden aktualisiert</span>
+  </div>
+</div>
